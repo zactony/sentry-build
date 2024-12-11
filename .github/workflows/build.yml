@@ -21,20 +21,14 @@ jobs:
         git clone https://github.com/getsentry/self-hosted.git
         cd self-hosted
 
-    # 3. 设置依赖环境
-    - name: Setup environment
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker.io docker-compose
-
-    # 4. 运行 install.sh 脚本
+    # 3. 运行 install.sh 脚本
     - name: Run install.sh script
       run: |
         cd self-hosted
         chmod +x install.sh
         ./install.sh --no-report-self-hosted-issues
 
-    # 5. 登录 GitHub Container Registry
+    # 4. 登录 GitHub Container Registry
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v2
       with:
@@ -42,7 +36,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-     # 6. 推送 Docker 镜像到 GitHub Container Registry
+    # 5. 推送 Docker 镜像到 GitHub Container Registry
     - name: Push Docker images
       run: |
         docker tag sentry-onpremise-local ghcr.io/${{ github.repository_owner }}/sentry:latest
