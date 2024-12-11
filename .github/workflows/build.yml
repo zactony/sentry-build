@@ -36,8 +36,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    # 5. 推送 Docker 镜像到 GitHub Container Registry
-    - name: Push Docker images
+    # 5. 获取当前 docker 镜像列表
+    - name: Get docker images list
       run: |
-        docker tag sentry-onpremise-local ghcr.io/${{ github.repository_owner }}/sentry:latest
-        docker push ghcr.io/${{ github.repository_owner }}/sentry:latest
+        docker images
